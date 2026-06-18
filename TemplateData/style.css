@@ -1,16 +1,159 @@
-body { padding: 0; margin: 0 }
-#unity-container { position: absolute }
-#unity-container.unity-desktop { left: 50%; top: 50%; transform: translate(-50%, -50%) }
-#unity-container.unity-mobile { position: fixed; width: 100%; height: 100% }
-#unity-canvas { background: #231F20 }
-.unity-mobile #unity-canvas { width: 100%; height: 100% }
-#unity-loading-bar { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: none }
-#unity-logo { width: 154px; height: 130px; background: url('unity-logo-dark.png') no-repeat center }
-#unity-progress-bar-empty { width: 141px; height: 18px; margin-top: 10px; margin-left: 6.5px; background: url('progress-bar-empty-dark.png') no-repeat center }
-#unity-progress-bar-full { width: 0%; height: 18px; margin-top: 10px; background: url('progress-bar-full-dark.png') no-repeat center }
-#unity-footer { position: relative }
-.unity-mobile #unity-footer { display: none }
-#unity-logo-title-footer { float:left; width: 102px; height: 38px; background: url('unity-logo-title-footer.png') no-repeat center }
-#unity-build-title { float: right; margin-right: 10px; line-height: 38px; font-family: arial; font-size: 18px }
-#unity-fullscreen-button { cursor:pointer; float: right; width: 38px; height: 38px; background: url('fullscreen-button.png') no-repeat center }
-#unity-warning { position: absolute; left: 50%; top: 5%; transform: translate(-50%); background: white; padding: 10px; display: none }
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  background: #02040d;
+  color: #eef7ff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#unity-shell {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: linear-gradient(180deg, #06101d 0%, #02040d 100%);
+}
+
+#unity-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+}
+
+#unity-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #02040d;
+  touch-action: none;
+}
+
+#unity-loading-bar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: none;
+  width: min(360px, 70vw);
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+}
+
+#unity-loading-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+#unity-progress-bar-empty {
+  width: 100%;
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 236, 255, 0.55);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#unity-progress-bar-full {
+  width: 0%;
+  height: 100%;
+  background: #35ffcf;
+  box-shadow: 0 0 18px rgba(53, 255, 207, 0.8);
+}
+
+#unity-warning {
+  position: absolute;
+  left: 50%;
+  top: max(16px, env(safe-area-inset-top));
+  display: none;
+  max-width: min(760px, calc(100vw - 32px));
+  transform: translateX(-50%);
+  z-index: 4;
+}
+
+.unity-banner-warning,
+.unity-banner-error {
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  color: #10131c;
+  background: #ffe27a;
+}
+
+.unity-banner-error {
+  color: #fff;
+  background: #c92020;
+}
+
+#unity-fullscreen-button {
+  position: absolute;
+  right: max(14px, env(safe-area-inset-right));
+  bottom: max(14px, env(safe-area-inset-bottom));
+  z-index: 3;
+  min-width: 164px;
+  min-height: 42px;
+  border: 1px solid rgba(148, 236, 255, 0.48);
+  background: rgba(2, 8, 18, 0.72);
+  color: #eef7ff;
+  font: 700 14px Arial, Helvetica, sans-serif;
+}
+
+@media (max-width: 900px), (max-height: 500px) {
+  #unity-fullscreen-button {
+    left: max(8px, env(safe-area-inset-left));
+    right: auto;
+    bottom: max(8px, env(safe-area-inset-bottom));
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    overflow: hidden;
+    color: transparent;
+    font-size: 0;
+  }
+
+  #unity-fullscreen-button::before {
+    content: "\26F6";
+    color: #eef7ff;
+    font-size: 22px;
+    line-height: 1;
+  }
+}
+
+#orientation-message {
+  display: none;
+}
+
+@media (orientation: portrait) and (max-width: 900px) {
+  #orientation-message {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 28px;
+    text-align: center;
+    background: rgba(2, 4, 13, 0.94);
+  }
+
+  #orientation-message strong {
+    font-size: 28px;
+  }
+
+  #orientation-message span {
+    max-width: 280px;
+    font-size: 16px;
+    line-height: 1.35;
+  }
+}
